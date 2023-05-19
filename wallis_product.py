@@ -33,10 +33,15 @@ def plot(n):
     approximations = pi_approx(n)
     differences = [abs(val - pi) for val in approximations.values()]
 
+    plt.figure(1)
+    plt.suptitle("Approximation")
     # plot values
     plt.plot(approximations.keys(), approximations.values())
     # plot pi constant
     plt.plot([0, n], [pi, pi])
+
+    plt.figure(2)
+    plt.suptitle("Differences")
     # plot differences
     plt.plot(approximations.keys(), differences)
 
