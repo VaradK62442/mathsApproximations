@@ -56,22 +56,12 @@ def pi_approx(reps, x_bound, y_bound, t, l):
         # such that the distance between the first set of points and this one is
         # equal to l
 
-        # first, we define a set of points which describe a circle of radius l
-        # around the chosen points
-        # this can be described by the equation
-        # (x - x_1)^2 + (y - y_1)^2 = l^2
-        # where x_1 and y_1 are the first set of points
-        # we then choose a random number between x_1 - l and x_1 + l as our value for x_2
-        # we can then substitute x_2 into the above equation to get a value for y_2
-        # this way, we can ensure that the second set of points will be l units away from the first set
-        x_2 = random.uniform(x_1 - l, x_1 + l)
-
-        # to find y_2, we substitute x_2 into the equation (x - x_1)^2 + (y - y_1)^2 = l^2
-        # rearranging for y, we get
-        y_2 = sqrt(l**2 - (x_2 - x_1)**2) + y_1
-
+        # first, we pick a random angle for the line to follow
+        # and convert this into radians
         theta = radians(random.uniform(0,360))
 
+        # using trigonometry, we add the respective values to the first x and y coordinates
+        # to get the second x y coordinates
         x_2 = (x_1 + cos(theta) * l)
         y_2 = (y_1 + sin(theta) * l)
 
