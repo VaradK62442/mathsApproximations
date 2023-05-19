@@ -61,18 +61,24 @@ def pi_approx(n):
 def plot(results):
     for point in results:
         if point['in_circle']:
-            plt.scatter(point['x'], point['y'], c='g', s=1)
+            c = 'g'
         else:
-            plt.scatter(point['x'], point['y'], c='r', s=1)
+            c = 'r'
+    
+        plt.scatter(point['x'], point['y'], c=c, s=1)
             
     plt.show()
 
 
 def main():
-    results = pi_approx(1_000)
-    print(f"Final approximation: {results[-1]['approximation']}")
+    res = pi_approx(1_000)
 
-    plot(results)
+    print(f'''
+    Final approximation: {res[-1]["approximation"]}
+    Final difference: {abs(res[-1]["approximation"] - pi)}
+    ''')
+
+    plot(res)
 
 
 main()
