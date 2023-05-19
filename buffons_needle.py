@@ -160,6 +160,7 @@ def main():
 
     print(f'''
     Final approximation: {res[-1]["approximation"]}
+    Final difference: {abs(res[-1]["approximation"] - pi)}
     ''')
 
     plot(res, x_bound, y_bound, t, l)
