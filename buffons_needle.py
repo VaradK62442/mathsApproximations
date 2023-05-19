@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
-from math import pi, sqrt, floor
+from math import pi, sqrt, floor, cos, sin, radians
 import random
+from pprint import pprint
 
 
 '''
@@ -69,6 +70,11 @@ def pi_approx(reps, x_bound, y_bound, t, l):
         # rearranging for y, we get
         y_2 = sqrt(l**2 - (x_2 - x_1)**2) + y_1
 
+        theta = radians(random.uniform(0,360))
+
+        x_2 = (x_1 + cos(theta) * l)
+        y_2 = (y_1 + sin(theta) * l)
+
         # now we check if the line defined by our two sets of points lies on a boundary
         # we can do this by checking if there is a multiple of t within the ranges of the x-coordinates of the line
         # we do this by dividing the x-coordinates by t, to get a lower and upper bound on the multiple of t
@@ -119,6 +125,7 @@ def pi_approx(reps, x_bound, y_bound, t, l):
 # function to plot both needle drops and estimation results
 def plot(results, x_bound, y_bound, t, l):
     plt.figure(1)
+    plt.suptitle("Needle drops")
     # plot boundary lines
     for i in range(x_bound):
         if i % t == 0:
@@ -127,18 +134,22 @@ def plot(results, x_bound, y_bound, t, l):
     # plot needles
     for needle in results:
         if needle["cross"]:
-            plt.plot((needle['x_1'], needle['x_2']), (needle['y_1'], needle['y_2']), 'g')
+            col = 'g'
         else:
-            plt.plot((needle['x_1'], needle['x_2']), (needle['y_1'], needle['y_2']), 'r')
+            col = 'r'
+
+        plt.plot((needle['x_1'], needle['x_2']), (needle['y_1'], needle['y_2']), col)
 
     # plot results
     plt.figure(2)
+    plt.suptitle("Approximation")
     plt.plot([needle['n'] for needle in results], [needle["approximation"] for needle in results])
     plt.plot((0, len(results)), (pi, pi))
 
     # DEBUG
     # plot distances
     plt.figure(3)
+    plt.suptitle("Distances")
     plt.plot([needle['n'] for needle in results], [needle["dist"] for needle in results])
     plt.plot((0, len(results)), (l, l))
 
@@ -147,7 +158,7 @@ def plot(results, x_bound, y_bound, t, l):
 
 # main function
 def main():
-    # canvas is from coordinate (0, 0) to (1_000_000, 1_000_000)
+    # canvas is from coordinate (0, 0) to (2_000, 2_000)
     x_bound, y_bound = 2_000, 2_000
 
     # boundary lines are vertical, every t units
@@ -155,7 +166,12 @@ def main():
     t = 5
     l = 2.6
 
-    res = pi_approx(2_000, x_bound, y_bound, t, l)
+    res = pi_approx(10_000, x_bound, y_bound, t, l)
+
+    print(f'''
+    Final approximation: {res[-1]["approximation"]}
+    ''')
+
     plot(res, x_bound, y_bound, t, l)
 
 
